@@ -1,0 +1,117 @@
+---
+ - name: Test ub_code GET endpoint
+   request:
+     uri: /ub_code?handler_name=getUbCodeHandler&clientUuid=2b303b77-3a3f-4b95-8a12-5de5f64f7e97
+     method: GET
+     headers:
+        Authorization: &jwt_token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE0NzE4ODQ2MzAsInVzZXIiOnsiaWQiOiJiZGVlOTg2Ny05OTBiLTQ0YWEtYmZiMS1jZTJkOTM4NGE0YTUiLCJhZG1pbiI6dHJ1ZX0sImFjY291bnQiOnsiaWQiOiI5ZGViMjgwOS0xNTg3LTQwMGUtOTRmZi1jMDVjOWRlMjNmMTkiLCJyb2xlcyI6WyJvd25lciJdfSwiY2xpZW50Ijp7ImlkIjoiMmIzMDNiNzctM2EzZi00Yjk1LThhMTItNWRlNWY2NGY3ZTk3IiwiaW50SWQiOjY4MDUyLCJyb2xlcyI6WyJhdXRob3IiXX19.5_QumxP9zxjTUfaukwyTjXFHW7VWtsDhpVXnHJ5flSrz3YzE2pEG5wpVMkLgK4h2rNq7R81QdXrAHrY6ErbQ1Q
+   response:
+     code: 200
+     body: '{"ubCode":"81d9eeab57854c4db9b192676eb06cc7","clientUuid":"2b303b77-3a3f-4b95-8a12-5de5f64f7e97"}'
+     headers:
+       content-type: application/json
+
+
+ - name: Test activation_rules GET endpoint
+   request:
+      uri: /activation_rules?ubCode=81d9eeab57854c4db9b192676eb06cc7&embUuid=3451a5f2-6b39-465b-b420-af8c172cfb32
+      method: GET
+      headers:
+         Authorization: *jwt_token
+   response:
+      code: 200
+      body: '{
+         "id": "76c3212c63d54c22b9e63d87cad7e97c",
+         "ubCode": "81d9eeab57854c4db9b192676eb06cc7",
+         "targets": {
+         "exclude": [
+         {
+         "val": "expectedExclude",
+         "domain": "unbouncepages-test.com",
+         "type": "contains"
+         },
+         {
+         "val": "expectedExclude",
+         "domain": "unbouncepages-test.com",
+         "type": "exact"
+         },
+         {
+         "val": "expectedExclude",
+         "domain": "unbouncepages-test.com",
+         "type": "startswith"
+         },
+         {
+         "val": "expectedExclude",
+         "domain": "unbouncepages-test.com",
+         "type": "endswith"
+         }
+         ],
+         "include": [
+         {
+         "val": "cdc-testing-page",
+         "domain": "unbouncepages-test.com",
+         "type": "exact"
+         },
+         {
+         "val": "cdc-testing-page",
+         "domain": "unbouncepages-test.com",
+         "type": "contains"
+         },
+         {
+         "val": "cdc-testing-page",
+         "domain": "unbouncepages-test.com",
+         "type": "startswith"
+         },
+         {
+         "val": "cdc-testing-page",
+         "domain": "unbouncepages-test.com",
+         "type": "endswith"
+         },
+         {
+         "domain": "unbouncepages-test.com",
+         "type": "everywhere"
+         }
+         ]
+         },
+         "parentVersion": "6f3e440c98c84e698db1fb41a0b01a7f",
+         "trigger": {
+            "name": "timed",
+            "parameters": [
+            {
+            "name": "delay",
+            "value": "5"
+         }
+         ]
+         },
+         "version": "aa2f6d0960a84f5ea6e809b0b3215b98",
+         "meta": {
+            "targetDomain": "unbouncepages-test.com",
+            "env": "integration",
+            "creatorUserUuid": "bdee9867-990b-44aa-bfb1-ce2d9384a4a5",
+            "clientUuid": "2b303b77-3a3f-4b95-8a12-5de5f64f7e97"
+            },
+            "schemaVersion": 1,
+            "event": {
+               "timestamp": 1471294433814,
+               "type": "published"
+               },
+               "displaySettings": {
+                  "name": "overlay"
+                  },
+            "embUuid": "3451a5f2-6b39-465b-b420-af8c172cfb32",
+            "frequency": {
+               "name": "visitFrequency",
+               "parameters": [
+               {
+               "name": "visitFrequency",
+               "value": "7"
+            }
+            ]
+            },
+            "published": {
+               "status": "current",
+               "version": "aa2f6d0960a84f5ea6e809b0b3215b98"
+            }
+            }'
+      headers:
+         content-type: application/json
